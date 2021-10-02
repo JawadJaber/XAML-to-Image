@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -24,27 +27,39 @@ namespace XamlToImage
         {
             InitializeComponent();
 
-            Loaded += MainWindow_Loaded;
         }
 
-        void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        private void export_images_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+
+                var canvas_as_string = XamlWriter.Save(this);
+              //  var modified_canvas_as_string = canvas_as_string.Replace("MainCanvas", "MainCanvas1");
+              // var new_main_window = (Window)XamlReader.Parse(modified_canvas_as_string);
+
                 var args = new BitmapMakerArgs
                 {
                     Element = MainCanvas,
-                    FileName = FileNameText.Text,
-                    CreateBlackVersion = CreateBlackCheck.IsChecked == true,
-                    ImageSizes = ImageSizeList.Items.OfType<Size>().ToArray(),
+                    FileName = "image1.png",
+                    CreateBlackVersion = true,
+                    ImageSizes = new Size[] {  },
                 };
+
                 BitmapMaker.Start(args);
+
+                MainCanvas.RenderTransform = new ScaleTransform();
+                MainCanvas.UpdateLayout();
+
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "XAML to Image");
-                Close();
+                //Close();
             }
         }
     }
+
+
 }

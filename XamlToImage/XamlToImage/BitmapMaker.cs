@@ -42,25 +42,25 @@ namespace XamlToImage
                 SaveAsImage(args.Element, scaleTransform, dirName, fileName, extension, false, size);
             }
 
-            if (args.CreateBlackVersion)
-            {
-                // Blacken elements on the canvas.
-                SetBlackImage(args.Element);
+            //if (args.CreateBlackVersion)
+            //{
+            //    // Blacken elements on the canvas.
+            //    SetBlackImage(args.Element);
 
-                // Save an image file for the blackened image.
-                SaveAsImage(args.Element, scaleTransform, dirName, fileName, extension, true);
+            //    // Save an image file for the blackened image.
+            //    SaveAsImage(args.Element, scaleTransform, dirName, fileName, extension, true);
 
-                // Save image files for the blackened image and the specified sizes.
-                foreach (var size in args.ImageSizes)
-                {
-                    SaveAsImage(args.Element, scaleTransform, dirName, fileName, extension, true, size);
-                }
-            }
+            //    // Save image files for the blackened image and the specified sizes.
+            //    foreach (var size in args.ImageSizes)
+            //    {
+            //        SaveAsImage(args.Element, scaleTransform, dirName, fileName, extension, true, size);
+            //    }
+            //}
 
             // Open the directory that image files have been deployed to.
             var filePath_original = CreateFilePath(dirName, fileName, extension);
             Process.Start("explorer", string.Format("/select,\"{0}\"", filePath_original));
-            Application.Current.Shutdown();
+           // Application.Current.Shutdown();
         }
 
         static void SaveAsImage(FrameworkElement element, ScaleTransform scaleTransform, string dirName, string fileName, string extension, bool isBlack = false, Size? size = null)
